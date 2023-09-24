@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "type": "chrome",
+            "name": "http://localhost:3000/api/v1/expenses/650ea2772dde478158deed3e",
+            "request": "launch",
+            "url": "http://localhost:3000/api/v1/expenses/650ea2772dde478158deed3e"
+        }
+    ]
+}

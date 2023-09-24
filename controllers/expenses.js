@@ -33,8 +33,20 @@ const createExpense = async (req, res) => {
     }
 }
 
-const updateExpense = (req, res) => {
-    res.send("update " + req.params.id);
+const updateExpense = async (req, res) => {
+    try{
+        const {id:expenseID} = req.params;
+        const expense  = await Expenses.findByIdAndUpdate({_id:expenseID}, req.body, {new:true, runValidators:true});
+        
+        if (!expense){
+            return res.status(404).json({msg:"id not found in database"});
+        }
+            res.status(200).json({expense});
+        
+    }
+    catch(err){
+        res.status(500).json({msg:err});
+    }
 }
 
 const deleteExpense = async (req, res) => {
