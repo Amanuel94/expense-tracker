@@ -1,21 +1,56 @@
-const getAllExpenses = (req, res) =>{
-    res.send("get all");
+const Expenses = require("../models/ExpenseSchema");
+
+const getAllExpenses = async (req, res) => {
+    try {
+        const expenses = await Expenses.find({});
+        res.status(200).json({ expenses });
+    }
+    catch (error) {
+        res.status(500).json({ msg: error });
+
+    }
 }
 
-const getExpense = (req, res) =>{
-    res.send("get single " + req.params.id);
+const getExpense = async (req, res) => {
+    try {
+        const expense = await Expenses.findOne({ _id: req.params.id });
+        if (!expense)
+            return res.status(404).json({ msg: "id not found" });
+        res.status(200).json(expense);
+    }
+    catch (error) {
+        res.status(500).json({ msg: error });
+    }
 }
 
-const createExpense = (req, res) =>{
-    res.send("create");
+const createExpense = async (req, res) => {
+    try {
+        const expense = await Expenses.create(req.body);
+        res.status(201).json({ expense });
+    }
+    catch (error) {
+        res.status(500).json({ msg: error });
+    }
 }
 
-const updateExpense = (req, res) =>{
+const updateExpense = (req, res) => {
     res.send("update " + req.params.id);
 }
 
-const deleteExpense = (req, res) =>{
-    res.send("delete " + + req.params.id);
+const deleteExpense = async (req, res) => {
+
+    try {
+        const {id:expenseID} = req.params;
+        const expense = await Expenses.findOneAndDelete({_id:expenseID});
+        if(!expense){
+            return res.status(404).json({msg:"id not found"})
+        }
+        res.status(200).json(expense);
+    }
+    catch(error) {
+        res.status(500).json({msg:error});
+    }
+
 }
 
 module.exports = {

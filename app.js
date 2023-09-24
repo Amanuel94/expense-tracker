@@ -1,15 +1,27 @@
-require('./db/connect');
-
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const expenseTracker = require('./routes/expense');
 const revenueTracker = require('./routes/revenues');
+const connectDB = require('./db/connect');
+
 
 app.use(express.json());
 app.use('/api/v1/expenses', expenseTracker);
 app.use('/api/v1/revenues', revenueTracker);
 
 const port = 3000;
-app.listen(port, console.log(
-    `Server is listening at ${port} ... `
-));
+
+const start =  async () => {
+    try{
+        await connectDB(process.env.MONGO_URI);
+        app.listen(port, console.log(
+            `Server is listening at ${port} ... `
+        ));
+    }
+    catch(err){
+        console.log(err);
+    }
+}
+
+start();
