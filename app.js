@@ -4,11 +4,12 @@ const app = express();
 const expenseTracker = require('./routes/expense');
 const revenueTracker = require('./routes/revenues');
 const connectDB = require('./db/connect');
-
+const errorHandlerMiddleware = require('./middlewares/errorHandler');
 
 app.use(express.json());
 app.use('/api/v1/expenses', expenseTracker);
 app.use('/api/v1/revenues', revenueTracker);
+app.use(errorHandlerMiddleware);
 
 const port = 3000;
 
