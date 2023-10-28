@@ -7,10 +7,11 @@ const userRouter = require('./routes/users');
 const connectDB = require('./db/connect');
 const errorHandlerMiddleware = require('./middlewares/errorHandler');
 
+
 app.use(express.json());
-
 app.use('/api/v2', userRouter);
-
+app.use('/api/v2/expenses',  expenseTracker);
+app.use('/api/v2/revenues',  revenueTracker);
 app.use(errorHandlerMiddleware);
 
 

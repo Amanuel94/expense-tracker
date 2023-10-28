@@ -17,6 +17,10 @@ const RevenueSchema = new mongoose.Schema({
         type: String,
         enum: ["salary", "allowance", "other"],
         default: "other"
+    },
+    userId:{
+        type:mongoose.SchemaTypes.ObjectId,
+        ref: 'users'
     }
 
 })

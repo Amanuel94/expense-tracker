@@ -17,6 +17,7 @@ const getExpense = asyncWrapper(async (req, res, next) => {
 
 const createExpense = asyncWrapper(async (req, res) => {
 
+    req.body.userId = req.user.user_id;
     const expense = await Expenses.create(req.body);
     res.status(201).json({ expense });
 
